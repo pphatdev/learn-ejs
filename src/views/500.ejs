@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            line-height: 1.6;
+        }
+        h1 { color: #333; }
+        .error-code { 
+            font-size: 72px;
+            color: #e74c3c;
+        }
+        .error-message {
+            color: #666;
+            margin: 20px 0;
+        }
+        .stack-trace {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 800px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-code">500</div>
+    <h1><%= title %></h1>
+    <div class="error-message"><%= message %></div>
+    <% if (stack) { %>
+        <pre class="stack-trace"><%= stack %></pre>
+    <% } %>
+    <p><a href="/">Return to Homepage</a></p>
+</body>
+</html>
