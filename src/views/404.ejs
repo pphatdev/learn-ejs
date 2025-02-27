@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 { color: #333; }
+        .error-code { 
+            font-size: 72px;
+            color: #e74c3c;
+        }
+        .url {
+            color: #666;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-code">404</div>
+    <h1><%= title %></h1>
+    <p>The requested URL was not found on this server:</p>
+    <p class="url"><%= url %></p>
+    <p><a href="/">Return to Homepage</a></p>
+</body>
+</html>
