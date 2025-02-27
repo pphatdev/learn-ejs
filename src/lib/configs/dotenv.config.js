@@ -2,7 +2,7 @@ import { config } from "dotenv";
 config()
 
 export const VERSION = process.env.NDOE_VERSION || "v1"
-export const PORT = process.env.NDOE_PORT || 3000
+export const PORT = process.env.NODE_PORT || 3000
 export const ENV = process.env.NODE_ENV || "development"
 
 // Auth Login
