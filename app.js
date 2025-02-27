@@ -1,7 +1,20 @@
 import express from 'express';
 import path from 'path';
-import ip from 'ip'
+import ipaddr from 'ipaddr.js'
 import ROUTE from './src/routes/web.js';
+
+const getNetworkAddress = () => {
+    try {
+        // CIDR notation
+        const addr = ipaddr.parseCIDR('172.26.17.136/24');
+        return addr[0].toString(); // Returns the network address part
+    } catch (error) {
+        console.error('Error getting network address:', error);
+        return '0.0.0.0';
+    }
+};
+
+const IPAddress = getNetworkAddress();
 
 import { fileURLToPath } from 'url';
 import { Response } from './src/lib/utils/response.js';
@@ -35,7 +48,7 @@ app.get('/test-error', (req, res, next) => {
  * Catches all unmatched API routes
  */
 app.all('/api/*', (req, res) => {
-    const currentPath = `http://${ip.address()}:${PORT}${req.path}`
+    const currentPath = `http://${IPAddress}:${PORT}${req.path}`
     const currentURL = currentPath + (req._parsedUrl.search ? req._parsedUrl.search : '')
     
     res.status(404).send(
@@ -54,7 +67,7 @@ app.all('/api/*', (req, res) => {
  * Catches all other unmatched routes
  */
 app.use((req, res) => {
-    const currentPath = `http://${ip.address()}:${PORT}${req.path}`
+    const currentPath = `http://${IPAddress}:${PORT}${req.path}`
     const currentURL = currentPath + (req._parsedUrl.search ? req._parsedUrl.search : '')
     
     if (req.accepts('html')) {
@@ -80,7 +93,7 @@ app.use((req, res) => {
  * Handles all uncaught errors
  */
 app.use((err, req, res, next) => {
-    const currentPath = `http://${ip.address()}:${PORT}${req.path}`
+    const currentPath = `http://${IPAddress}:${PORT}${req.path}`
     const currentURL = currentPath + (req._parsedUrl.search ? req._parsedUrl.search : '')
     
     console.error('Error:', err.stack);
@@ -120,5 +133,5 @@ app.listen(PORT, () => {
     console.log(`\n🌞  Web development:`)
     console.log(`🚀 \x1b[30mLocalhost:\x1b[32m http://localhost:${PORT}\x1b[0m`)
     console.log(`🚀 \x1b[30mLocal Service:\x1b[32m http://127.0.0.1:${PORT}\x1b[0m`)
-    console.log(`🚀 \x1b[30mHost Service:\x1b[32m http://${ip.address()}:${PORT}\x1b[0m`)
+    console.log(`🚀 \x1b[30mHost Service:\x1b[32m http://${IPAddress}:${PORT}\x1b[0m`)
 })
