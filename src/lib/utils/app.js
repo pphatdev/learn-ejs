@@ -1,7 +1,9 @@
 import express from 'express';
 import path from 'path';
 import ipaddr from 'ipaddr.js'
-import ROUTE from './src/routes/web.js';
+import ROUTE from '../../routes/web.js';
+import { fileURLToPath } from 'url';
+import { Response } from './response.js';
 
 const getNetworkAddress = () => {
     try {
@@ -15,33 +17,27 @@ const getNetworkAddress = () => {
 };
 
 const IPAddress = getNetworkAddress();
-
-import { fileURLToPath } from 'url';
-import { Response } from './src/lib/utils/response.js';
 const PORT = process.env.PORT || 3000;
 const ENV = process.env.NODE_ENV || 'development';
 const VERSION = process.env.VERSION || 'v1';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const app = express();
-app.set('views', path.join(__dirname, 'src/views'));
+
+// Set views directory and view engine
+app.set('views', path.join(__dirname, '..', '..', 'views'));
+
 app.set('view engine', 'ejs');
 
-app.use(express.static(path.join(__dirname, 'src/public')));
+// Static css and js files
+app.use(express.static(path.join(__dirname,"..","..","..", 'build/css')));
+app.use(express.static(path.join(__dirname,"..","..","..", 'build/js')));
+app.use(express.static(path.join(__dirname,"..","..","..", 'public')));
 
+// Body parser middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(ROUTE);
 
-// Defualt End point
-app.get('/', (req, res) => {
-    res.send(Response.success(req.query))
-})
-
-// Test route for 500 error
-app.get('/test-error', (req, res, next) => {
-    throw new Error('Test error');
-});
 
 /**
  * API Not Found Handler
@@ -128,6 +124,8 @@ app.use((err, req, res, next) => {
     }
 })
 
+
+// Start server
 app.listen(PORT, () => {
     console.log(`\n♻️  Starting with: [\x1b[35m${ENV}\x1b[0m\] Mode!`)
     console.log(`\n🌞  Web development:`)
