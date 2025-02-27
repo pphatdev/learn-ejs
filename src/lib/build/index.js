@@ -10,11 +10,11 @@ async function ejs2html({ path: inputPath, outPath, data = {}, options = {} }) {
     try {
         // Set default data if none provided
         const defaultData = {
-            title: 'My Website',
+            title: 'Hello World',
             ...data
         };
         
-        const template = await fs.readFile(inputPath, 'utf8');
+        // const template = await fs.readFile(inputPath, 'utf8');
         const html = await ejs.renderFile(inputPath, defaultData, options);
         
         // Create directory if it doesn't exist
@@ -45,14 +45,15 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function processAllEjsFiles() {
     try {
-        const viewDir = path.join(__dirname, 'src/views');
+        // Fix: Move up from build directory to find views
+        const viewDir = path.join(__dirname, '..', '..', 'views');
         const ejsFiles = await getAllEjsFiles(viewDir);
         
         for (const filepath of ejsFiles) {
             const relativePath = path.relative(viewDir, filepath);
             const outPath = path.join(
                 __dirname, 
-                'build', 
+                path.join('..', '..', '..' , 'build'), // back to folder build
                 relativePath.replace('.ejs', '.html')
             );
             
@@ -99,6 +100,5 @@ async function processAllEjsFiles() {
 }
 
 console.log('🦄 Processing EJS files...');
-
 await processAllEjsFiles();
-console.log('\n✨ All EJS files have been processed! ✨\n');
+console.log("\n✨ All EJS files have been processed! ✨\n");

@@ -10,19 +10,22 @@
     ".": "./src/index.js"
   },
   "scripts": {
-    "dev": "node --watch ./app.js",
-    "build": "node ./build.js",
-    "start": "serve ./build"
+    "dev": "node --watch ./src/lib/utils/app.js",
+    "start": "serve ./build",
+    "build": "node ./src/lib/build/index.js",
+    "style": "npx @tailwindcss/cli -i ./public/styles/app.css -o ./build/css/app.css --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@tailwindcss/cli": "^4.0.9",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.8",
     "express": "~4.21.2",
     "ipaddr.js": "^2.2.0",
-    "serve": "^14.2.4"
+    "serve": "^14.2.4",
+    "tailwindcss": "^4.0.9"
   }
 }
