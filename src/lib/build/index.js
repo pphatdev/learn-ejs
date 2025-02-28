@@ -2,6 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import ejs from 'ejs';
 import { fileURLToPath } from 'url';
+import buildWebManifest from './webmanifest.js';
+import moveAssets from './move-assets.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -100,5 +102,10 @@ async function processAllEjsFiles() {
 }
 
 console.log('🦄 Processing EJS files...');
+
+
+moveAssets()
+await buildWebManifest()
 await processAllEjsFiles();
+
 console.log("\n✨ All EJS files have been processed! ✨\n");
