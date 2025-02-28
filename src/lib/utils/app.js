@@ -30,9 +30,11 @@ app.set('views', path.join(__dirname, '..', '..', 'views'));
 app.set('view engine', 'ejs');
 
 // Static css and js files
-app.use(express.static(path.join(__dirname,"..","..","..", 'build/css')));
-app.use(express.static(path.join(__dirname,"..","..","..", 'build/js')));
-app.use(express.static(path.join(__dirname,"..","..","..", 'public')));
+app.use(express.static(path.join(process.cwd(), 'build')));
+// app.use(express.static(path.join(process.cwd(), 'build/css')));
+// app.use(express.static(path.join(process.cwd(), 'build/js')));
+app.use(express.static(path.join(process.cwd(), 'public')));
+
 
 // Body parser middleware
 app.use(express.urlencoded({ extended: true }));

@@ -2,6 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import ejs from 'ejs';
 import { fileURLToPath } from 'url';
+import buildWebManifest from './webmanifest.js';
+import moveAssets from './move-assets.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -90,9 +92,8 @@ async function processAllEjsFiles() {
             });
 
             console.log(`✓ \x1b[30mProcessed: \x1b[33m ${relativePath} \x1b[30m → \x1b[32m build\\${relativePath.replace('.ejs', '.html')}\x1b[0m`);
-            
-            // Add 200ms delay between processing files
-            await sleep(200);
+
+            await sleep(20);
         }
     } catch (err) {
         console.error('Error processing EJS files:', err);
@@ -100,5 +101,15 @@ async function processAllEjsFiles() {
 }
 
 console.log('🦄 Processing EJS files...');
+
+
+// Move assets first
+moveAssets()
+
+// Build web manifest
+await buildWebManifest()
+
+// Process EJS files
 await processAllEjsFiles();
+
 console.log("\n✨ All EJS files have been processed! ✨\n");

@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>client side ejs compiled with express middleware</title>
-    <link rel="stylesheet" href="app.css">
-</head>
+    <%- include('../components/head', {
+        title: 'My Home Page',
+        description: 'Welcome to my website homepage',
+        keywords: 'home, welcome, website',
+        imageUrl: 'https://example.com/image.jpg',
+        fullUrl: process.env.NODE_APP_URL
+    }) %>
 
 <body>
-    <div class="text-5xl">
-        <%= hello %>
-        <%= hello %>
-        <%= hello %>
-    </div>
 
     <%- include('../components/layouts/header') %>
 </body>
