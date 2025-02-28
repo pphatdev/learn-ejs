@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "node --watch ./src/lib/utils/app.js",
     "start": "serve ./build",
-    "build": "node ./src/lib/build/index.js",
+    "build": "node --env-file=.env ./src/lib/build/index.js && npx @tailwindcss/cli -i ./public/styles/app.css -o ./build/css/app.css --minify",
     "style": "npx @tailwindcss/cli -i ./public/styles/app.css -o ./build/css/app.css --watch"
   },
   "keywords": [],
